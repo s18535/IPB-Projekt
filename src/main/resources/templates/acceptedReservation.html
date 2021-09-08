@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jachty.pl</title>
+</head>
+<body>
+<header>
+    <h1>Jachty.pl</h1>
+
+    <link rel="stylesheet" href="/css/style.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@1&family=Syne+Mono&display=swap"
+          rel="stylesheet">
+    <img src="/images/logo3.png" alt="Logo" width="250" height="250">
+</header>
+<nav>
+    <ul>
+        <li><a href="/" class="active">Strona Główna</a></li>
+        <li><a href="/client/choose">Klient</a></li>
+        <li><a href="/employee/choose">Pracownik</a></li>
+    </ul>
+</nav>
+<main>
+    <h2>Strona Główna</h2>
+
+    <form class="form" th:object="${helm}" th:action="@{/employee/accept/{id}(id=${reservation.getReservationId()})}" method="post">
+
+        <label for="choseSternika">Wybierz Sternika</label>
+        <select name="choseSternik" id="choseSternika" th:field="*{helmsman}">
+            <option value="-1" selected="selected" disabled="disabled">Wybierz sternika</option>
+            <option th:each="helmsman : ${helmsmans}" th:value="${helmsman.getPersonId()}"
+                    th:text="${helmsman.getFirstName()+' '+helmsman.getLastName()}"></option>
+        </select>
+
+        <div class="form-buttons">
+            <input class="form-button-submit" type="submit" value="Przypisz"/>
+            <p id="errorsSummary" class="errors-text"></p>
+        </div>
+    </form>
+</main>
+</body>
+</html>

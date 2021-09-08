@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jachty.pl - Client</title>
+</head>
+<body>
+<header>
+  <h1>Jachty.pl</h1>
+
+  <link rel="stylesheet" href="/css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@1&family=Syne+Mono&display=swap"
+        rel="stylesheet">
+  <img src="/images/logo3.png" alt="Logo" width="250" height="250">
+</header>
+<nav>
+  <ul>
+    <li><a href="/">Strona Główna</a></li>
+    <li><a href="/client/choose">Klient</a></li>
+    <li><a href="/employee/choose">Pracownik</a></li>
+  </ul>
+</nav>
+<main>
+  <h2>Wybierz zakładke</h2>
+
+  <div>
+    <a th:href="${'/client/term'}" class="form-button-submit">Wynajmij</a>
+    <a th:href="${'/client/reservations'}" class="form-button-submit">Wpłać kaucje</a>
+    <a th:href="${'/client/reservations/sentopinion'}" class="form-button-submit">Opiniuj</a>
+  </div>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jachty.pl- new reservation</title>
+</head>
+<body>
+<header>
+    <h1>Jachty.pl</h1>
+
+    <link rel="stylesheet" href="/css/style.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@1&family=Syne+Mono&display=swap"
+          rel="stylesheet">
+    <img src="/images/logo3.png" alt="Logo" width="250" height="250">
+</header>
+<nav>
+    <ul>
+        <li><a href="/" class="active">Strona Główna</a></li>
+        <li><a href="/client/choose">Klient</a></li>
+        <li><a href="/employee/choose">Pracownik</a></li>
+    </ul>
+</nav>
+<main>
+    <h2>Nowa rezerwacja</h2>
+
+    <form class="form" th:object="${term}" th:action="@{/client/checkTerm}" method="post"
+          th:if="${checkDate==false or checkDate==null}">
+
+        <label>Data od</label>
+        <input type="datetime-local" th:if="${#fields.hasErrors('startDate')!=true}" th:field="*{startDate}"
+               id="startDate">
+        <input class="error-input" type="datetime-local" th:if="${#fields.hasErrors('startDate')}"
+               th:field="*{startDate}" id="startDate">
+        <!--  <input type="datetime-local" th:field="*{startDate}" th:if="${checkDate==true}" disabled>-->
+        <span class="errors-text" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></span>
+        <span class="errors-text" th:if="${#fields.hasErrors('startDate')!=true}" th:value="${default}"></span>
+
+        <label>Data do</label>
+        <input type="datetime-local" th:field="*{endDate}" th:if="${#fields.hasErrors('endDate')!=true}">
+        <input class="error-input" type="datetime-local" th:field="*{endDate}" th:if="${#fields.hasErrors('endDate')}">
+        <!--  <input type="datetime-local" th:field="*{endDate}" th:if="${checkDate==true}" disabled>-->
+        <span class="errors-text" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></span>
+        <span class="errors-text" th:if="${#fields.hasErrors('endDate')!=true}" th:value="${default}"></span>
+
+
+        <div class="form-buttons">
+            <input class="form-button-submit" type="submit" value="Sprawdź"/>
+            <a class="form-button-cancel" href="/tournament">Anuluj</a>
+            <span class="errors-text" th:text="${message}"></span>
+        </div>
+
+        <!--<label th:text="${checkDate}"></label>-->
+
+    </form>
+
+    <form class="form" th:object="${reservation}" th:action="@{/client/reservation}" method="post"
+          th:if="${checkDate==true}">
+        <label hidden="true">Data od</label>
+        <input type="datetime-local" th:field="*{startDate}" readonly>
+        <span class="errors-text" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></span>
+        <span class="errors-text" th:if="${#fields.hasErrors('startDate')!=true}" th:value="${default}"></span>
+
+        <label>Data do</label>
+        <input type="datetime-local" th:field="*{endDate}" readonly>
+        <span class="errors-text" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></span>
+        <span class="errors-text" th:if="${#fields.hasErrors('endDate')!=true}" th:value="${default}"></span>
+
+        <label for="choseJacht1">Wybierz wolny jacht</label>
+        <select name="choseSponsor" id="choseJacht1" th:field="*{yacht}">
+            <option value="-1" selected="selected" disabled>Wybierz jacht</option>
+            <option th:each="yacht : ${yachts}" th:value="${yacht.getYachtId()}"
+                    th:text="${yacht.getName()}"></option>
+        </select>
+        <span class="errors-text" th:if="${#fields.hasErrors('yacht')}" th:errors="*{yacht}"></span>
+        <span class="errors-text" th:if="${#fields.hasErrors('yacht')!=true}" th:value="${default}"></span>
+
+        <label>Czy posiada patent?</label>
+        <input type="checkbox" th:field="*{patent}" th:checked="true"/>
+        <span class="errors-text" th:if="${#fields.hasErrors('patent')!=true}" th:value="${default}"></span>
+        <span class="errors-text" th:if="${#fields.hasErrors('patent')==true}" th:value="${default}"></span>
+
+        <div class="form-buttons">
+            <input value="Dodaj" class="form-button-submit" type="submit"/>
+            <a class="form-button-cancel" href="client">Anuluj</a>
+        </div>
+    </form>
+
+
+</main>
+</body>
+</html>

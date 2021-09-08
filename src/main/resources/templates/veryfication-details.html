@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jachty.pl - Employee</title>
+</head>
+<body>
+<header>
+  <h1>Jachty.pl</h1>
+
+  <link rel="stylesheet" href="/css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@1&family=Syne+Mono&display=swap"
+        rel="stylesheet">
+  <img src="/images/logo3.png" alt="Logo" width="250" height="250">
+</header>
+<nav>
+  <ul>
+    <li><a href="/">Strona Główna</a></li>
+    <li><a href="/client/choose">Klient</a></li>
+    <li><a href="/employee/choose">Pracownik</a></li>
+  </ul>
+</nav>
+<main>
+  <h2>Szczegły rezerwacji</h2>
+
+  <form class="form" th:object="${reservation}" th:action="@{/employee/reservation/new/}" method="post">
+    <label for="id">Id:</label>
+    <input type="number" name="id" id="id" th:value="${reservation.getReservationId()}" disabled/>
+    <span class="errors-text" th:value="${default}"></span>
+
+    <label for="firstName"> Imie:</label>
+    <input type="text" name="firstName" th:value="${reservation.getClient().getFirstName()}" id="firstName" disabled />
+    <span class="errors-text" th:value="${default}"></span>
+
+    <label for="lastName">Nazwisko:</label>
+    <input type="text" name="lastName" th:value="${reservation.getClient().getLastName()}" id="lastName" disabled />
+    <span class="errors-text" th:value="${default}"></span>
+
+    <label for="od">Data Od:</label>
+    <input type="text" name="od" th:value="${reservation.getStartDate()}" id="od" disabled />
+    <span class="errors-text" th:value="${default}"></span>
+
+    <label for="od">Data Do:</label>
+    <input type="text" name="do" th:value="${reservation.getEndDate()}" id="do" disabled />
+    <span class="errors-text" th:value="${default}"></span>
+
+    <label for="yacht">Jacht:</label>
+    <input type="text" name="yacht" th:value="${reservation.getYacht().getName()}" id="yacht" disabled />
+    <span class="errors-text" th:value="${default}"></span>
+
+    <label for="status">Status:</label>
+    <input type="text" name="status" th:value="${reservation.getStatus()}" id="status" disabled />
+    <span class="errors-text" th:value="${default}"></span>
+
+    <label for="status">Czy ma patent:</label>
+    <input type="checkbox" name="status" th:value="${reservation.isPatent()}" th:if="${reservation.isPatent()==true}" th:checked="true" id="status" disabled />
+    <input type="checkbox" name="status" th:value="${reservation.isPatent()}" th:if="${reservation.isPatent()==false}" th:checked="false" id="status" disabled />
+    <span class="errors-text" th:value="${default}"></span>
+
+  <div class="form-buttons">
+    <a th:href="${'/employee/reservation/rejected?id='+reservation.getReservationId()}" class="form-button-edit">Odrzuć</a>
+    <a th:href="${'/employee/reservation/accepted?id='+reservation.getReservationId()}" class="form-button-edit">Przyjmij</a>
+  </div>
+
+</main>
+</body>
+</html>

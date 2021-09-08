@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jachty.pl</title>
+</head>
+<body>
+<header>
+    <h1>jachty.pl</h1>
+
+    <link rel="stylesheet" href="/css/style.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@1&family=Syne+Mono&display=swap"
+          rel="stylesheet">
+    <img src="/images/logo3.png" alt="Logo" width="250" height="250">
+</header>
+<nav>
+    <ul>
+        <li><a href="/" class="active">Strona Główna</a></li>
+        <li><a href="/client/choose">Klient</a></li>
+        <li><a href="/employee/choose">Pracownik</a></li>
+    </ul>
+</nav>
+<main>
+    <h2>Lista Rezerwacji</h2>
+    <table class="table-list">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Data Od</th>
+            <th>Data Do</th>
+            <th>Status rezerwacji</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody th:each="reservation : ${reservations}">
+        <tr>
+            <td th:text="${reservation.getReservationId()}"></td>
+            <td th:text="${reservation.getStartDate()}"></td>
+            <td th:text="${reservation.getEndDate()}"></td>
+            <td th:text="${reservation.getStatus()}"></td>
+            <td>
+                <ul class="table-list-actions">
+                    <li>
+                        <a th:href="${'/client/reservations/opinion?id='+ reservation.getReservationId()}" class="list-actions-button-details">Opiniuj</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

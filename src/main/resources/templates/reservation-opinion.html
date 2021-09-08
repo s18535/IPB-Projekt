@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jachty.pl</title>
+</head>
+<body>
+<header>
+    <h1>Jachty.pl</h1>
+
+    <link rel="stylesheet" href="/css/style.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@1&family=Syne+Mono&display=swap"
+          rel="stylesheet">
+    <img src="/images/logo3.png" alt="Logo" width="250" height="250">
+</header>
+<nav>
+    <ul>
+        <li><a href="/">Strona Główna</a></li>
+        <li><a href="/client/choose">Klient</a></li>
+        <li><a href="/employee/choose">Pracownik</a></li>
+    </ul>
+</nav>
+<main>
+    <h2>Wystawienie opinii</h2>
+    <form class="form" th:object="${opinion}" th:action="${'/client/reservations/opinion?id='+ id }" method="post">
+
+        <label for="scale">Ocena<abbr>*</abbr></label>
+        <input type="number" name="scale" id="scale" th:field="*{scale}"/>
+        <span class="errors-text" th:value="${default}"></span>
+
+        <label for="description">Opis<sup>*</sup></label>
+        <input type="text" name="description" id="description"  th:field="*{description}"/>
+        <span class="errors-text" th:value="${default}"></span>
+
+
+        </div>
+        <div class="form-buttons">
+            <p id="errorsSummary" class="errors-text"></p>
+            <input type="submit" class="form-button-submit" value="Dodaj"/>
+            <a href="/" class="form-button-cancel">Anuluj</a>
+        </div>
+
+    </form>
+</main>
+</body>
+</html>
